@@ -19,4 +19,10 @@ export type CalendarView = 'day' | 'month';
 export type RootStackParamList = {
   Auth: undefined;
   Main: undefined;
+  EventForm: { eventId?: string; date?: string };
+};
+
+export type MainTabParamList = {
+  Calendar: undefined;
+  Profile: undefined;
 };
