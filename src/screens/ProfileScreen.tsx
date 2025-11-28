@@ -8,16 +8,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
 import { authService } from '../services/authService';
 import { biometricService } from '../services/biometricService';
 
-type ProfileScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
 export default function ProfileScreen() {
-  const navigation = useNavigation<ProfileScreenNavigationProp>();
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [biometricAvailable, setBiometricAvailable] = useState(false);
   const [biometricEnabled, setBiometricEnabled] = useState(false);
@@ -50,10 +44,6 @@ export default function ProfileScreen() {
         style: 'destructive',
         onPress: async () => {
           await authService.signOut();
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Auth' }],
-          });
         },
       },
     ]);

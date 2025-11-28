@@ -62,13 +62,11 @@ export default function AppNavigator() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      if (!isAuthenticated) {
-        checkAuth();
-      }
+      checkAuth();
     }, 500);
     
     return () => clearInterval(interval);
-  }, [isAuthenticated, checkAuth]);
+  }, [checkAuth]);
 
   if (isAuthenticated === null) {
     return null;
