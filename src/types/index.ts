@@ -1,10 +1,22 @@
 export interface User {
-    email: string;
-    password: string;
-    id: string;
-  }
+  email: string;
+  password: string;
+  id: string;
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  userId: string;
+}
+
+export type CalendarView = 'day' | 'month';
 
 export type RootStackParamList = {
-    Auth: undefined;
-    Main: undefined;
-  };
+  Auth: undefined;
+  Main: undefined;
+};
