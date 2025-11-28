@@ -3,6 +3,7 @@ import { User } from '../types';
 
 const USER_KEY = '@user';
 const TOKEN_KEY = '@auth_token';
+const BIOMETRIC_ENABLED_KEY = '@biometric_enabled';
 
 export const authService = {
   async signUp(email: string, password: string): Promise<{ user: User; token: string }> {
@@ -73,5 +74,18 @@ export const authService = {
   async getAllUsers(): Promise<User[]> {
     const usersJson = await AsyncStorage.getItem(USER_KEY);
     return usersJson ? JSON.parse(usersJson) : [];
+  },
+
+  async enableBiometric(): Promise<void> {
+    await AsyncStorage.setItem(BIOMETRIC_ENABLED_KEY, 'true');
+  },
+
+  async disableBiometric(): Promise<void> {
+    await AsyncStorage.removeItem(BIOMETRIC_ENABLED_KEY);
+  },
+
+  async isBiometricEnabled(): Promise<boolean> {
+    const enabled = await AsyncStorage.getItem(BIOMETRIC_ENABLED_KEY);
+    return enabled === 'true';
   },
 };

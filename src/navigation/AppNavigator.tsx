@@ -7,6 +7,11 @@ import { authService } from '../services/authService';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// Placeholder component for Main screen (will be replaced with tabs later)
+function MainScreen() {
+  return null;
+}
+
 export default function AppNavigator() {
   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(null);
 
@@ -43,7 +48,7 @@ export default function AppNavigator() {
         {!isAuthenticated ? (
           <Stack.Screen name="Auth" component={AuthScreen} />
         ) : (
-          <Stack.Screen name="Main" component={() => <></>} />
+          <Stack.Screen name="Main" component={MainScreen} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

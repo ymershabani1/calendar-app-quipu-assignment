@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { authService } from '../services/authService';
+import { biometricService } from '../services/biometricService';
 
 export default function AuthScreen() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -39,6 +40,42 @@ export default function AuthScreen() {
       setLoading(false);
     }
   };
+
+  const handleBiometricAuth = async () => {
+    const isAvailable = await biometricService.isAvailable();
+    if (!isAvailable) {
+      Alert.alert('Error', 'Biometric authentication is not available on this device');
+      return;
+    }
+
+    const isEnabled = await authService.isBiometricEnabled();
+    if (!isEnabled) {
+      Alert.alert('Info', 'Please sign in first to enable biometric authentication');
+      return;
+    }
+
+    const success = await biometricService.authenticate();
+    if (success) {
+      const user = await authService.getCurrentUser();
+      if (user) {
+        await authService.signIn(user.email, user.password);
+      }
+    } else {
+      Alert.alert('Error', 'Biometric authentication failed');
+    }
+  };
+
+  const checkBiometric = React.useCallback(async () => {
+    const isAvailable = await biometricService.isAvailable();
+    const isEnabled = await authService.isBiometricEnabled();
+    if (isAvailable && isEnabled) {
+      handleBiometricAuth();
+    }
+  }, []);
+
+  React.useEffect(() => {
+    checkBiometric();
+  }, [checkBiometric]);
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
@@ -92,6 +129,10 @@ export default function AuthScreen() {
                   ? 'Already have an account? Sign In'
                   : "Don't have an account? Sign Up"}
               </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.biometricButton} onPress={handleBiometricAuth}>
+              <Text style={styles.biometricText}>Sign in with Biometrics</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -160,5 +201,15 @@ const styles = StyleSheet.create({
   switchText: {
     color: '#007AFF',
     fontSize: 14,
+  },
+  biometricButton: {
+    marginTop: 15,
+    alignItems: 'center',
+    padding: 10,
+  },
+  biometricText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
