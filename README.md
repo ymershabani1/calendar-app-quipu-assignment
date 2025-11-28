@@ -43,4 +43,13 @@ cd ..
 In terminal: 
 npm test
 
-If you run into any issues, open an issue.
+
+## Screenshots
+
+<div align="center">
+  <img src="screenshots/auth-screen.png" alt="Sign In Screen" width="300" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+  <img src="screenshots/calendar-view.png" alt="Calendar View" width="300" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+  <br/><br/>
+  <img src="screenshots/event-form.png" alt="Event Form" width="300" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+  <img src="screenshots/profile-screen.png" alt="Profile Screen" width="300" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+</div>
